@@ -1,74 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Colour Vision</title>
+    <title>Color Vision Enhancement Web App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <div class="main">
-        <div class="toggle">
-            <div class="btn"></div>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-container">
+            <button id="nav-toggle" class="nav-toggle" aria-label="Toggle Navigation">&#9776;</button>
+            <ul id="nav-links">
+                <li><a href="#color-identification">Color Identification</a></li>
+                <li><a href="#color-matching">Color Matching</a></li>
+                <li><a href="#shade-difference">Shade Difference</a></li>
+                <li><a href="#progress">Progress</a></li>
+                <li><a href="#educational-content">Educational</a></li>
+            </ul>
+            <button id="toggle-mode" class="toggle-icon" aria-label="Toggle Dark/Light Mode">🌓</button>
         </div>
-        <div class="screen"></div>
-        <div class="boxes">
-            <button class="black batan" name="batan" value="black" >Black</button>
-            <button class="brown batan" name="batan" value="brown" >Brown</button>
-            <button class="red batan" name="batan" value="red" >Red</button>
-            <button class="orange batan" name="batan" value="orange" >Orange</button>
-            <button class="yellow batan" name="batan" value="yellow" >Yellow</button>
-            <button class="green batan" name="batan" value="green" >Green</button>
-            <button class="blue batan" name="batan" value="blue" >Blue</button>
-            <button class="violet batan" name="batan" value="violet" >Violet</button>
-            <button class="gray batan" name="batan" value="gray" >Gray</button>
-            <button class="pink batan" name="batan" value="pink" >Pink</button>
-        </div>
-        <div class="boxes">
-            <button class="purple batan" name="batan" value="purple">Purple</button>
-            <button class="navy batan" name="batan" value="navy">Navy</button>
-            <button class="aqua batan" name="batan" value="aqua">Aqua</button>
-            <button class="lime batan" name="batan" value="lime">Lime</button>
-            <button class="coral batan" name="batan" value="coral">Coral</button>
-            <button class="teal batan" name="batan" value="teal">Teal</button>
-            <button class="indigo batan" name="batan" value="indigo">Indigo</button>
-            <button class="maroon batan" name="batan" value="maroon">Maroon</button>
-            <button class="chocolate batan" name="batan" value="chocolate">Chocolate</button>
-            <button class="cyan batan" name="batan" value="cyan">Cyan</button>
-        </div>
-        <div class="boxes">
-            <button class="silver batan" name="batan" value="silver">Silver</button>
-            <button class="gold batan" name="batan" value="gold">Gold</button>
-            <button class="crimson batan" name="batan" value="crimson">Crimson</button>
-            <button class="hotpink batan" name="batan" value="hotpink">Hot Pink</button>
-            <button class="ivory batan" name="batan" value="ivory">Ivory</button>
-            <button class="orchid batan" name="batan" value="orchid">Orchid</button>
-            <button class="salmon batan" name="batan" value="salmon">Salmon</button>
-            <button class="fuchsia batan" name="batan" value="fuchsia">Fuchsia</button>
-            <button class="peru batan" name="batan" value="peru">Peru</button>
-        </div>
-        <div class="boxes">
-            <button class="tomato batan" name="batan" value="tomato">Tomato</button>
-            <button class="olive batan" name="batan" value="olive">Olive</button>
-            <button class="khaki batan" name="batan" value="khaki">Khaki</button>
-            <button class="wheat batan" name="batan" value="wheat">Wheat</button>
-            <button class="royalblue batan" name="batan" value="royalblue">Royalblue</button>
-            <button class="lavender batan" name="batan" value="lavender">Lavender</button>
-            <button class="oldlace batan" name="batan" value="oldlace">Oldlace</button>
-            <button class="white batan" name="batan" value="white">White</button>
-            <button class="burlywood batan" name="batan" value="burlywood">Burlywood</button>
-        </div>
-    </div>
+    </nav>
 
 
+    <!-- Main Content -->
+    <main>
+        <section id="color-identification" class="game-section">
+            <h2>Color Identification Game <span class="help-icon" onclick="openHelpModal('colorIdentification')">?</span></h2>
+            <div id="color-display" class="color-box"></div>
+            <div id="options" class="options"></div>
+            <p id="feedback" class="feedback"></p>
+        </section>
 
+        <!-- Modal for help -->
+        <div id="help-modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeHelpModal()">&times;</span>
+                <p id="modal-text">Help text goes here.</p>
+            </div>
+        </div>       
 
+        <section id="color-matching" class="game-section">
+            <h2>Color Matching Game <span class="help-icon" onclick="openHelpModal('colorMatching')">?</span></h2>
+            <div id="matching-swatches" class="swatches"></div>
+            <p id="match-feedback" class="feedback"></p>
+        </section>
+
+        <section id="shade-difference" class="game-section">
+            <h2>Shade Difference Game <span class="help-icon" onclick="openHelpModal('shadeDifference')">?</span> <button id="check-order" onclick="checkShadeOrder()">Done</button></h2>
+            <div id="shade-container" class="shade-container"></div>
+        </section>        
+
+        <section id="progress" class="progress-section">
+            <h2>Progress Tracking</h2>
+            <canvas id="progress-chart"></canvas>
+        </section>
+
+        <section id="educational-content" class="educational-section">
+            <h2>Educational Content</h2>
+            <div class="content">
+                <p>Color vision deficiencies affect many people worldwide. Here, you can learn more about different types of color blindness and find tips to better distinguish colors.</p>
+                <p>For example, individuals with red-green color blindness may find it helpful to use apps and tools that highlight contrast and color differences. Technology advancements also provide glasses designed to enhance color perception.</p>
+                <p>Understanding your condition and practicing regularly with exercises can improve your ability to differentiate between colors over time.</p>
+            </div>
+        </section>
+        
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Color Vision Enhancement Web App</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <script src="script.js"></script>
 </body>
-
 </html>
-
-
-<!-- BB ROY G B V G W -->
