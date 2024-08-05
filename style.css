@@ -1,72 +1,255 @@
+/* Reset some basic styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: sans-serif;
+    text-decoration: none;
 }
 
-html,
 body {
-    width: 100%;
-    height: 100vh;
-    /* background-color: #000; */
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    line-height: 1.6;
+    background-color: #f8f8f8;
+    transition: background-color 0.3s;
 }
 
-.main{
-    width: 100%;
-    height: 100vh;
-}
-
-.toggle{
-    width: 4vw;
-    height: 3.8vh;
-    border: 2px solid #000;
-    border-radius: 15px;
-    float: right;
-    margin: 5vh 5vw;
-    position: relative;
-    cursor: pointer;
-}
-
-.btn{
-    width: 21px;
-    height: 21px;
-    border-radius: 50%;
-    background-color: #000;
-    position: absolute;
-    margin: 1px;
-}
-
-.screen{
-    width: 300px;
-    height: 200px;
-    border: 5px solid #000;
-    box-shadow: 0px 0px 5px #740072;
-    position: relative;
-    left: 38%;
-    top: 5vh;
-    margin-bottom: 15vh;
-}
-
-.boxes{
+nav {
+    background: #4a90e2;
+    padding: 1rem;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-container {
     width: 100%;
-    gap: 1vw;
-    justify-content: center;
-    margin-top: 5vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.boxes button{
-    padding: 3vh 3vw;
+#nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
     cursor: pointer;
-    border-radius: 5px;
-    border: 1px solid #000;
-    font-size: .8rem;
-    font-weight: 700;
-    background-color: transparent;
-    transition: all .3s;
 }
 
-.boxes button:hover{
-    box-shadow: 2px 2px 5px  #740072;
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+}
+
+nav a, #toggle-mode {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+nav a:hover, #toggle-mode:hover {
+    text-decoration: none;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+}
+
+.game-section {
+    position: relative;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+}
+
+.game-section, .progress-section, .educational-section {
+    width: 100%;
+    max-width: 1200px;
+    margin-bottom: 3rem;
+    text-align: center;
+    min-height: 100vh;
+}
+
+h2{
+    margin-bottom: 2rem;
+}
+
+.color-box {
+    height: 200px;
+    margin: 1rem auto;
+    border: 5px solid #e2e2e2;
+    border-radius: 5px;
+    max-width: 350px;
+    margin-bottom: 3rem;
+}
+
+.options {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.options button{
+    border-radius: 40px !important;
+    height: 50px;
+}
+
+.options button, .swatches div, .shade-container div {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    background-color: #eee;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.options button:hover, .swatches div:hover, .shade-container div:hover {
+    background-color: #ddd;
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background: #4a90e2;
+    color: white;
+}
+
+.feedback {
+    margin-top: 1rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.dark-mode {
+    background-color: #222;
+    color: #eee;
+}
+
+.toggle-icon {
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+button#toggle-mode:hover {
+    background-color: transparent;
+}
+
+.swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.swatches div {
+    height: 50px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.educational-section p {
+    margin-bottom: 1rem;
+}
+
+.educational-section {
+    padding: 2rem;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+}
+
+.help-icon {
+    position: absolute;
+    top: 25px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    color: #4a90e2; /* Or any color that suits your design */
+    z-index: 100;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    max-width: 300px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#check-order {
+    padding: 5px 10px;
+    margin-left: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+#check-order:hover {
+    background-color: #367bd8;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    #nav-toggle {
+        display: block;
+    }
+
+    #nav-links {
+        flex-direction: column;
+        width: 100%;
+        display: none;
+    }
+
+    #nav-links li {
+        text-align: center;
+        padding: 10px;
+    }
+
+    #nav-links li a {
+        display: block;
+        padding: 10px;
+    }
+
 }
