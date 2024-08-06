@@ -136,6 +136,16 @@ footer {
     color: #eee;
 }
 
+.dark-mode .help-icon{
+    background-color: #07449b;
+    color: #fff;
+}
+
+.dark-mode .help-icon:hover{
+    background-color: #082f67;
+    color: #fff;
+}
+
 .toggle-icon {
     font-size: 1.5rem;
     background: none;
@@ -173,11 +183,24 @@ button#toggle-mode:hover {
 .help-icon {
     position: absolute;
     top: 25px;
-    right: 10px;
+    right: 20px;
     cursor: pointer;
     font-size: 20px;
-    color: #4a90e2; /* Or any color that suits your design */
+    color: #4a90e2;
     z-index: 100;
+    background: #e7e7e7;
+    padding: 10px;
+    width: 30px;
+    border-radius: 50%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all ease-in-out .3s;
+}
+
+.help-icon:hover{
+    background-color: #cdcdcd;
 }
 
 .modal {
@@ -229,6 +252,27 @@ button#toggle-mode:hover {
 #check-order:hover {
     background-color: #367bd8;
 }
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+    color: #fff;
+    border-radius: 10px;
+    animation: fadeInOut 1s forwards;
+    height: 50px;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
 
 /* Responsive Styles */
 @media (max-width: 768px) {
