@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Available colors
-    const colors = ['Red', 'Green', 'Blue', 'Yellow', 'Purple', 'Orange', 'Pink', 'Brown', 'Gray', 'Teal', 'Cyan', 'Navy', 'Lavender', 'Gold', 'Silver', 'Crimson', 'Ivory', 'Indigo', 'Salmon', 'Lime', 'Charcoal', 'Violet', 'Aqua', 'Ruby', 'Chocolate', 'Black', 'skyblue', 'snow', 'forestgreen'];
+    const colors = ['Red', 'Green', 'Blue', 'Yellow', 'Purple', 'Orange', 'Pink', 'Brown', 'Gray', 'Teal', 'Cyan', 'Navy', 'Lavender', 'Gold', 'Silver', 'Crimson', 'Ivory', 'Indigo', 'Salmon', 'Lime', 'Violet', 'Aqua', 'Ruby', 'Chocolate', 'Black', 'skyblue', 'snow', 'forestgreen'];
 
     // Initialize score tracking
     const scores = {
@@ -80,28 +80,55 @@ document.addEventListener('DOMContentLoaded', () => {
         const shuffledColors = [...colors].sort(() => Math.random() - 0.5).slice(0, 49); // Display 49 random color options
         shuffledColors.push(currentColor); // Ensure the current color is among the options
         shuffledColors.sort(() => Math.random() - 0.5); // Shuffle again to randomize placement
-
+    
         shuffledColors.forEach(color => {
             const button = document.createElement('button');
             button.innerText = color;
+            button.style.transition = 'background-color 0.3s, color 0.3s'; // Add transition for both background and text color
+            button.onmouseover = () => {
+                button.style.backgroundColor = color.toLowerCase(); // Change background color to match color name
+                button.style.color = 'white'; // Change text color to white
+            };
+            button.onmouseout = () => {
+                button.style.backgroundColor = ''; // Reset background color
+                button.style.color = ''; // Reset text color
+            };
             button.onclick = () => checkColor(color);
             options.appendChild(button);
         });
+    }  
+
+    function showPopup(message, isSuccess) {
+        const popup = document.createElement("div");
+        popup.style.position = "fixed";
+        popup.style.top = "50%";
+        popup.style.left = "50%";
+        popup.style.transform = "translate(-50%, -50%)";
+        popup.style.padding = "20px";
+        popup.style.color = "#fff";
+        popup.style.backgroundColor = isSuccess ? "green" : "red";
+        popup.style.borderRadius = "10px";
+        popup.style.zIndex = "1000";
+        popup.innerText = message;
+    
+        document.body.appendChild(popup);
+    
+        setTimeout(() => {
+            popup.remove();
+        }, 2000);
     }
 
     function checkColor(selectedColor) {
         const feedback = document.getElementById('feedback');
         if (selectedColor === currentColor) {
-            feedback.textContent = 'Correct!';
-            feedback.style.color = 'green';
+            showPopup('Correct!', true);
             scores.colorIdentification.correct++;
         } else {
-            feedback.textContent = `Incorrect! The correct color was ${currentColor}.`;
-            feedback.style.color = 'red';
+            showPopup(`Incorrect! The correct color was ${currentColor}.`, false);
             scores.colorIdentification.incorrect++;
         }
         updateScores();
-        setTimeout(updateColorBox, 2000);
+        setTimeout(updateColorBox, 2000)
     }
 
     // Color Matching Game
