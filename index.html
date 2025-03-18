@@ -3,78 +3,251 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Color Vision Enhancement Web App</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>ColorVision Trainer</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
+    <div class="container">
+        <header>
+            <h1>Color Vision Trainer</h1>
+            <p>Improve your color recognition skills with targeted exercises</p>
+        </header>
 
-    <!-- Navigation Bar -->
-    <nav>
-        <div class="nav-container">
-            <button id="nav-toggle" class="nav-toggle" aria-label="Toggle Navigation">&#9776;</button>
-            <ul id="nav-links">
-                <li><a href="#color-identification">Color Identification</a></li>
-                <li><a href="#color-matching">Color Matching</a></li>
-                <li><a href="#shade-difference">Shade Difference</a></li>
-                <li><a href="#progress">Progress</a></li>
-                <li><a href="#educational-content">Educational</a></li>
-            </ul>
-            <button id="toggle-mode" class="toggle-icon" aria-label="Toggle Dark/Light Mode">🌓</button>
+        <div class="user-profile">
+            <div id="welcome-message">Welcome!</div>
+            <div id="stats-container">
+                <div class="stat">
+                    <span class="stat-label">Sessions:</span>
+                    <span id="session-count">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Accuracy:</span>
+                    <span id="accuracy">0%</span>
+                </div>
+            </div>
         </div>
-    </nav>
 
-
-    <!-- Main Content -->
-    <main>
-        <section id="color-identification" class="game-section">
-            <h2>Color Identification Game <span class="help-icon" onclick="openHelpModal('colorIdentification')">?</span></h2>
-            <div id="color-display" class="color-box"></div>
-            <div id="options" class="options"></div>
-            <p id="feedback" class="feedback"></p>
-        </section>
-
-        <!-- Modal for help -->
-        <div id="help-modal" class="modal">
-            <div class="modal-content">
-                <span class="close" onclick="closeHelpModal()">&times;</span>
-                <p id="modal-text">Help text goes here.</p>
+        <div id="home-screen" class="screen active">
+            <h2>Select Training Mode</h2>
+            <div class="mode-selection">
+                <div class="mode-card" data-mode="color-matching">
+                    <div class="mode-icon"><i class="fas fa-palette"></i></div>
+                    <div class="mode-title">Color Matching</div>
+                    <div class="mode-description">Match colors from memory by adjusting RGB sliders</div>
+                </div>
+                <div class="mode-card" data-mode="shade-sorting">
+                    <div class="mode-icon"><i class="fas fa-sort"></i></div>
+                    <div class="mode-title">Shade Sorting</div>
+                    <div class="mode-description">Arrange color swatches in correct gradient order</div>
+                </div>
+                <div class="mode-card" data-mode="ishihara">
+                    <div class="mode-icon"><i class="fas fa-eye"></i></div>
+                    <div class="mode-title">Ishihara Test</div>
+                    <div class="mode-description">Practice identifying numbers in color plates</div>
+                </div>
+                <div class="mode-card" data-mode="color-naming">
+                    <div class="mode-icon"><i class="fas fa-tags"></i></div>
+                    <div class="mode-title">Color Naming</div>
+                    <div class="mode-description">Improve your color vocabulary and recognition</div>
+                </div>
             </div>
-        </div>       
-
-        <section id="color-matching" class="game-section">
-            <h2>Color Matching Game <span class="help-icon" onclick="openHelpModal('colorMatching')">?</span></h2>
-            <div id="matching-swatches" class="swatches"></div>
-            <p id="match-feedback" class="feedback"></p>
-        </section>
-
-        <section id="shade-difference" class="game-section">
-            <h2>Shade Difference Game <span class="help-icon" onclick="openHelpModal('shadeDifference')">?</span> <button id="check-order" onclick="checkShadeOrder()">Done</button></h2>
-            <div id="shade-container" class="shade-container"></div>
-        </section>        
-
-        <section id="progress" class="progress-section">
-            <h2>Progress Tracking</h2>
-            <canvas id="progress-chart"></canvas>
-        </section>
-
-        <section id="educational-content" class="educational-section">
-            <h2>Educational Content</h2>
-            <div class="content">
-                <p>Color vision deficiencies affect many people worldwide. Here, you can learn more about different types of color blindness and find tips to better distinguish colors.</p>
-                <p>For example, individuals with red-green color blindness may find it helpful to use apps and tools that highlight contrast and color differences. Technology advancements also provide glasses designed to enhance color perception.</p>
-                <p>Understanding your condition and practicing regularly with exercises can improve your ability to differentiate between colors over time.</p>
+            
+            <div class="settings-panel">
+                <h3>Settings</h3>
+                <div class="setting-row">
+                    <label for="difficulty">Difficulty:</label>
+                    <select id="difficulty">
+                        <option value="easy">Easy</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                </div>
+                <div class="setting-row">
+                    <label for="color-type">Color Type:</label>
+                    <select id="color-type">
+                        <option value="all" selected>All Colors</option>
+                        <option value="red-green">Red-Green Focus</option>
+                        <option value="blue-yellow">Blue-Yellow Focus</option>
+                        <option value="monochromatic">Monochromatic</option>
+                    </select>
+                </div>
+                <div class="setting-row">
+                    <label>
+                        <input type="checkbox" id="sound-enabled" checked>
+                        Sound Effects
+                    </label>
+                </div>
             </div>
-        </section>
-        
-    </main>
+        </div>
+
+        <div id="color-matching-screen" class="screen">
+            <h2>Color Matching</h2>
+            <div class="exercise-container">
+                <div class="target-color-container">
+                    <h3>Target Color</h3>
+                    <div id="target-color" class="color-box"></div>
+                </div>
+                <div class="user-color-container">
+                    <h3>Your Match</h3>
+                    <div id="user-color" class="color-box"></div>
+                    <div class="color-sliders">
+                        <div class="slider-group">
+                            <label for="red-slider">Red (R):</label>
+                            <input type="range" id="red-slider" min="0" max="255" value="128">
+                            <span id="red-value">128</span>
+                        </div>
+                        <div class="slider-group">
+                            <label for="green-slider">Green (G):</label>
+                            <input type="range" id="green-slider" min="0" max="255" value="128">
+                            <span id="green-value">128</span>
+                        </div>
+                        <div class="slider-group">
+                            <label for="blue-slider">Blue (B):</label>
+                            <input type="range" id="blue-slider" min="0" max="255" value="128">
+                            <span id="blue-value">128</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button id="submit-match" class="btn primary-btn">Submit Match</button>
+                <button id="reveal-target" class="btn secondary-btn">Reveal Values</button>
+                <button id="next-color" class="btn secondary-btn">Next Color</button>
+            </div>
+            <div id="match-feedback" class="feedback-panel hidden"></div>
+        </div>
+
+        <div id="shade-sorting-screen" class="screen">
+            <h2>Shade Sorting</h2>
+            <div class="exercise-container">
+                <p class="instructions">Drag and arrange the color swatches in order from lightest to darkest.</p>
+                <div id="shade-container" class="shade-container"></div>
+            </div>
+            <div class="action-buttons">
+                <button id="check-order" class="btn primary-btn">Check Order</button>
+                <button id="reset-shades" class="btn secondary-btn">Reset</button>
+                <button id="next-shades" class="btn secondary-btn">Next Set</button>
+            </div>
+            <div id="sorting-feedback" class="feedback-panel hidden"></div>
+        </div>
+
+        <div id="ishihara-screen" class="screen">
+            <h2>Ishihara Test Training</h2>
+            <div class="exercise-container">
+                <div id="ishihara-plate" class="ishihara-plate"></div>
+                <div class="answer-container">
+                    <label for="ishihara-answer">What number do you see?</label>
+                    <input type="number" id="ishihara-answer" min="0" max="99">
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button id="submit-ishihara" class="btn primary-btn">Submit Answer</button>
+                <button id="reveal-ishihara" class="btn secondary-btn">Reveal Answer</button>
+                <button id="next-ishihara" class="btn secondary-btn">Next Plate</button>
+            </div>
+            <div id="ishihara-feedback" class="feedback-panel hidden"></div>
+        </div>
+
+        <div id="color-naming-screen" class="screen">
+            <h2>Color Naming</h2>
+            <div class="exercise-container">
+                <div id="naming-color" class="color-box large"></div>
+                <div class="naming-options">
+                    <div id="naming-options-container" class="options-grid"></div>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button id="submit-naming" class="btn primary-btn">Submit Answer</button>
+                <button id="reveal-naming" class="btn secondary-btn">Reveal Answer</button>
+                <button id="next-naming" class="btn secondary-btn">Next Color</button>
+            </div>
+            <div id="naming-feedback" class="feedback-panel hidden"></div>
+        </div>
+
+        <div class="navigation-bar">
+            <button id="go-home" class="nav-btn"><i class="fas fa-home"></i> Home</button>
+            <button id="view-progress" class="nav-btn"><i class="fas fa-chart-line"></i> Progress</button>
+            <button id="clear-data" class="nav-btn warning"><i class="fas fa-trash"></i> Reset Data</button>
+        </div>
+
+        <div id="progress-screen" class="screen">
+            <h2>Your Progress</h2>
+            <div class="progress-container">
+                <div class="progress-summary">
+                    <div class="progress-card">
+                        <h3>Total Exercises</h3>
+                        <div id="total-exercises" class="progress-value">0</div>
+                    </div>
+                    <div class="progress-card">
+                        <h3>Average Accuracy</h3>
+                        <div id="average-accuracy" class="progress-value">0%</div>
+                    </div>
+                    <div class="progress-card">
+                        <h3>Streak</h3>
+                        <div id="current-streak" class="progress-value">0 days</div>
+                    </div>
+                </div>
+                <div class="progress-details">
+                    <h3>Performance by Exercise</h3>
+                    <div class="progress-bars">
+                        <div class="progress-item">
+                            <div class="progress-label">Color Matching</div>
+                            <div class="progress-bar-container">
+                                <div id="color-matching-progress" class="progress-bar" style="width: 0%;"></div>
+                            </div>
+                            <div id="color-matching-percent" class="progress-percent">0%</div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-label">Shade Sorting</div>
+                            <div class="progress-bar-container">
+                                <div id="shade-sorting-progress" class="progress-bar" style="width: 0%;"></div>
+                            </div>
+                            <div id="shade-sorting-percent" class="progress-percent">0%</div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-label">Ishihara Test</div>
+                            <div class="progress-bar-container">
+                                <div id="ishihara-progress" class="progress-bar" style="width: 0%;"></div>
+                            </div>
+                            <div id="ishihara-percent" class="progress-percent">0%</div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-label">Color Naming</div>
+                            <div class="progress-bar-container">
+                                <div id="color-naming-progress" class="progress-bar" style="width: 0%;"></div>
+                            </div>
+                            <div id="color-naming-percent" class="progress-percent">0%</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="recommendations">
+                    <h3>Recommended Focus</h3>
+                    <div id="recommendations-list" class="recommendations-list">
+                        <p>Complete more exercises to get recommendations.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="modal-title">Modal Title</div>
+            <div id="modal-body">Modal content here...</div>
+            <div class="modal-buttons">
+                <button id="modal-cancel" class="btn secondary-btn">Cancel</button>
+                <button id="modal-confirm" class="btn primary-btn">Confirm</button>
+            </div>
+        </div>
+    </div>
 
     <footer>
-        <p>&copy; 2024 Color Vision Enhancement Web App</p>
+        <p>Color Vision Trainer - A tool for improving color vision</p>
+        <p><small>This is not a medical diagnostic tool. Please consult a healthcare professional for vision concerns.</small></p>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
